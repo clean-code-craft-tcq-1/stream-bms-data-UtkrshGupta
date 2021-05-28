@@ -1,5 +1,5 @@
 from bmsDataGenerator import DataGenerator
-
+from bmsConstants import default_bms_param
 
 class BmsStreaming():
     def __init__(self, seed_value=None):
@@ -15,7 +15,7 @@ class BmsStreaming():
         return bms_log
             
     def send_to_console(self, data, index=0):
-        if len(data) < 3*(index+1):
+        if len(data) < len(default_bms_param):
             return 'NOT_SENT'
         
         if index == 0:
