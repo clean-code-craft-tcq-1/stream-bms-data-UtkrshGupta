@@ -72,3 +72,9 @@ This section lists the minimum functionality of the Sender and Receiver.
 ## Quality Parameters
 
 Setup the quality parameters of your project (duplication, complexity, coverage, warnings) using the GitHub workflow yml files.
+
+## Receiver end Instructions
+    - Run the bmsStreaming.py and enter the number of samples needed 
+    - Limit complexity and Duplicate checks are kept standard from previous assignments 
+    - Below is the output expected after running bmsStreaming.py
+    ![image](https://user-images.githubusercontent.com/15873999/120024013-32d6a380-c00c-11eb-8545-7082df9a1046.png)
