@@ -77,4 +77,16 @@ Setup the quality parameters of your project (duplication, complexity, coverage,
     - Run the bmsStreaming.py and enter the number of samples needed 
     - Limit complexity and Duplicate checks are kept standard from previous assignments 
     - Below is the output expected after running bmsStreaming.py
-    ![image](https://user-images.githubusercontent.com/15873999/120024013-32d6a380-c00c-11eb-8545-7082df9a1046.png)
+        Enter Total Number of Data Sample Required:10
+        temperature  | soc        | charging rate
+        ------------------------------------------
+        -11.85       | 0.75       | 0.91      
+        87.85        | 58.22      | 0.67      
+        -83.21       | 76.65      | 0.24      
+        -93.84       | 78.88      | 0.35      
+        24.66        | 61.58      | 0.15      
+        -63.38       | 11.44      | 0.01      
+        -2.65        | 96.49      | 0.06      
+        8.22         | 46.59      | 0.6       
+        -82.21       | 57.9       | 0.27      
+        11.29        | 64.46      | 0.48      
