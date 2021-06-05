@@ -1,5 +1,6 @@
 from bmsDataGenerator import DataGenerator
 from bmsConstants import default_bms_param
+import json
 
 class BmsStreaming():
     def __init__(self, seed_value=None):
@@ -18,10 +19,8 @@ class BmsStreaming():
         if len(data) < len(default_bms_param):
             return 'NOT_SENT'
         
-        if index == 0:
-            print("{:<12} | {:<10} | {:<10}".format(*data.keys())) 
-            print("------------------------------------------")
-        print("{:<12} | {:<10} | {:<10}".format(*data.values()))
+        json_data = json.dumps(data)
+        print(json_data)
         return 'OK'
 
 if __name__ == '__main__':
