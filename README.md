@@ -78,15 +78,13 @@ Setup the quality parameters of your project (duplication, complexity, coverage,
     - Limit complexity and Duplicate checks are kept standard from previous assignments 
     - Below is the output expected after running bmsStreaming.py
         Enter Total Number of Data Sample Required:10
-        temperature  | soc        | charging rate
-        ------------------------------------------
-        -11.85       | 0.75       | 0.91      
-        87.85        | 58.22      | 0.67      
-        -83.21       | 76.65      | 0.24      
-        -93.84       | 78.88      | 0.35      
-        24.66        | 61.58      | 0.15      
-        -63.38       | 11.44      | 0.01      
-        -2.65        | 96.49      | 0.06      
-        8.22         | 46.59      | 0.6       
-        -82.21       | 57.9       | 0.27      
-        11.29        | 64.46      | 0.48      
+        {"temperature": -50.07, "soc": 7.95, "charging rate": 0.97}
+        {"temperature": 85.31, "soc": 90.52, "charging rate": 0.56}
+        {"temperature": 47.04, "soc": 20.79, "charging rate": 0.26}
+        {"temperature": -47.24, "soc": 62.88, "charging rate": 0.48}
+        {"temperature": 81.42, "soc": 43.27, "charging rate": 0.65}
+        {"temperature": 37.26, "soc": 59.15, "charging rate": 0.15}
+        {"temperature": 79.85, "soc": 18.34, "charging rate": 0.67}
+        {"temperature": 30.97, "soc": 54.14, "charging rate": 0.03}
+        {"temperature": 30.5, "soc": 87.17, "charging rate": 0.01}
+        {"temperature": 61.43, "soc": 39.19, "charging rate": 0.53}   
