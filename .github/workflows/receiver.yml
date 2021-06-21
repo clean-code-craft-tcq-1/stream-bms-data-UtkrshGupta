@@ -12,6 +12,9 @@ jobs:
 
     - name: install coverage tool
       run: sudo apt-get install -y gcovr
+      
+    - name: Install Boost library
+      run: sudo apt-get install libboost-thread-dev
 
     - name: build
       run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o receiverexecutable ./BMS_Receiver/BMS_Receiver.cpp ./BMS_Receiver/BMS_App.cpp
