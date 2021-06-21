@@ -46,9 +46,9 @@ private:
     vector<BmsParamters> m_bmsDataContainer;
     BmsParamStats        m_paramstat;
     int                  pos;
-    float                temprature;
-    vector<float>        stateOfCharge[SMA_MAX_LEN];
-    vector<float>        chargeRate[SMA_MAX_LEN];
+    float                m_temprature[SMA_MAX_LEN];
+    float                m_stateOfCharge[SMA_MAX_LEN];
+    float                m_chargeRate[SMA_MAX_LEN];
 
     void ParseDataFromConsole(string& , BmsParamters& );
     
@@ -57,6 +57,8 @@ private:
     void PerformSimpleMovingAverage();
 
     void CalculateBmsParamStatistics();
+
+    void PrintDataToConsole();
 
     inline void SetMinTemperature(float temperature)
     {
@@ -111,9 +113,9 @@ public:
     CBMSReceiver()
     {
         pos = 0;
-        temprature->clear();
-        stateOfCharge->clear();
-        chargeRate->clear();
+        memset(m_temprature, 0.0, SMA_MAX_LEN);
+        memset(m_stateOfCharge, 0.0, SMA_MAX_LEN);
+        memset(m_chargeRate, 0.0, SMA_MAX_LEN);
     }
 
     void GetDataFromConsole();
