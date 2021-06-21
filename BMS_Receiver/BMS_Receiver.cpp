@@ -1,6 +1,7 @@
 #include "BMS_Receiver.h"
+#include <algorithm>
 
-void CBMSReceiver::ParseDataFromConsole(string& data, BmsData& params)
+void CBMSReceiver::ParseDataFromConsole(string& data, BmsParamters& params)
 {
     string dataCopy = data;
     dataCopy.resize(dataCopy.size() - 1);
@@ -18,23 +19,58 @@ void CBMSReceiver::ParseDataFromConsole(string& data, BmsData& params)
     params.chargeRate = std::stof(subString[CR_JSON_INDEX]);
 }
 
+void CBMSReceiver::PerformMinMaxCalculation()
+{
+
+    auto data = std::minmax_element(begin(m_bmsDataContainer), end(m_bmsDataContainer), 
+                                    [](BmsParamters& p1, BmsParamters& p2)
+                                    {
+                                        return p1.temperature < p2.temperature; 
+                                    });
+
+    m_paramstat.minTemperature = data.first->temperature;
+    m_paramstat.maxTemperature = data.second->temperature;
+
+    data = std::minmax_element(begin(m_bmsDataContainer), end(m_bmsDataContainer), 
+                                    [](BmsParamters& p1, BmsParamters& p2)
+                                    {
+                                        return p1.stateOfCharge < p2.stateOfCharge; 
+                                    });
+
+    m_paramstat.minSoc = data.first->stateOfCharge;
+    m_paramstat.maxSoc = data.second->stateOfCharge;
+
+    data = std::minmax_element(begin(m_bmsDataContainer), end(m_bmsDataContainer), 
+                                    [](BmsParamters& p1, BmsParamters& p2)
+                                    {
+                                        return p1.chargeRate < p2.chargeRate; 
+                                    });
+
+    m_paramstat.minChargeRate = data.first->chargeRate;
+    m_paramstat.maxChargeRate = data.second->chargeRate;
+}
+
+void CBMSReceiver::PerformSimpleMovingAverage()
+{
+                 
+}
+
+void CBMSReceiver::CalculateBmsParamStatistics()
+{
+    PerformMinMaxCalculation();
+    PerformSimpleMovingAverage();        
+}
+
 void CBMSReceiver::GetDataFromConsole()
 {
     std::string data;
     bool init = true;
     for (int i = 0; i < 5; ++i)
     {
-        BmsData param;
+        BmsParamters param;
         std::getline(std::cin, data);
         ParseDataFromConsole(data, param); 
         m_bmsDataContainer.push_back(param);
-        if (init)
-        {
-            m_maxTemperature = m_minTemperature = m_bmsDataContainer.at(i).temperature;
-            m_maxSoc = m_minSoc = m_bmsDataContainer.at(i).stateOfCharge;
-            m_maxChargeRate = m_minChargeRate = m_bmsDataContainer.at(i).chargeRate;
-        }
-        
-
+        CalculateBmsParamStatistics();
     }
 }

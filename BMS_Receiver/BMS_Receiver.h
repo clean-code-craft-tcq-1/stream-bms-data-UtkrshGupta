@@ -12,63 +12,110 @@ using namespace std;
 #define TEMP_JSON_INDEX     1
 #define SOC_JSON_INDEX      3
 #define CR_JSON_INDEX       5
+#define SMA_MAX_LEN         5
 
-typedef struct BmsData
+typedef struct 
 {
     string jsonData;
     float temperature;
     float stateOfCharge;
     float chargeRate;
-}BmsData;
+}BmsParamters;
+
+typedef struct
+{
+    float           minTemperature;
+    float           maxTemperature;
+    float           minSoc;
+    float           maxSoc;
+    float           minChargeRate;
+    float           maxChargeRate;
+    float           avgTemperature;
+    float           avgSoc;
+    float           avgChargeRate;
+}BmsParamStats;
+
+typedef struct
+{
+    
+}BmsSmaArrays;
 
 class CBMSReceiver
 {
 private:
-    vector<BmsData> m_bmsDataContainer;
-    float           m_minTemperature;
-    float           m_maxTemperature;
-    float           m_minSoc;
-    float           m_maxSoc;
-    float           m_minChargeRate;
-    float           m_maxChargeRate;
-    float           m_avgTemperature;
-    float           m_avgSoc;
-    float           m_avgChargeRate;
+    vector<BmsParamters> m_bmsDataContainer;
+    BmsParamStats        m_paramstat;
+    int                  pos;
+    float                temprature;
+    vector<float>        stateOfCharge[SMA_MAX_LEN];
+    vector<float>        chargeRate[SMA_MAX_LEN];
 
-    void ParseDataFromConsole(string& , BmsData& );
-    void CalcSimpleMovingAverage();
+    void ParseDataFromConsole(string& , BmsParamters& );
+    
+    void PerformMinMaxCalculation();
+
+    void PerformSimpleMovingAverage();
+
+    void CalculateBmsParamStatistics();
 
     inline void SetMinTemperature(float temperature)
-    { 
-        m_minTemperature = temperature;
+    {
+        if (temperature < m_paramstat.minTemperature)
+        {
+            m_paramstat.minTemperature = temperature;
+        }
     }
 
     inline void SetMaxtemperature(float temperature)
     {
-        m_maxTemperature = temperature;
+        if (temperature > m_paramstat.maxTemperature)
+        {
+            m_paramstat.maxTemperature = temperature;
+        }
     }
 
     inline void SetMinStateOfCharge(float soc)
     {
-        m_minSoc = soc;
+        if (soc < m_paramstat.minChargeRate)
+        {
+            m_paramstat.minChargeRate = soc;
+        }
     }
 
     inline void SetMaxStateOfCharge(float soc)
     {
-        m_maxSoc = soc;
+        if (soc > m_paramstat.maxChargeRate)
+        {
+            m_paramstat.maxChargeRate = soc;
+        }
     }
 
     inline void SetMinChargeRate(float cr)
     {
-        m_minChargeRate = cr;
+        if (cr < m_paramstat.minChargeRate)
+        {
+            m_paramstat.minChargeRate = cr;
+        }
     }
 
     inline void SetMaxChargeRate(float cr)
     {
-        m_maxChargeRate = cr;
+        if (cr > m_paramstat.maxChargeRate)
+        {
+            m_paramstat.maxChargeRate = cr;
+        }
     }
 
 public:
+    
+    CBMSReceiver()
+    {
+        pos = 0;
+        temprature->clear();
+        stateOfCharge->clear();
+        chargeRate->clear();
+    }
+
     void GetDataFromConsole();
 };
 
