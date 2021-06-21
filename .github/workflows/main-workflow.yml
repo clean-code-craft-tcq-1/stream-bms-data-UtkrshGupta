@@ -34,13 +34,11 @@ jobs:
           
       - name: build for Receiver
         run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o Receiver ./BMS_Receiver/BMS_Receiver.cpp ./BMS_Receiver/BMS_App.cpp    
-        
+
       - name: Upload coverage
         uses: actions/upload-artifact@v2
         with:
           name: coverage
           path: ./htmlcov
           retention-days: 25
-          
-      - name: production code run
-          run: python bmsStreaming.py  | ./Receiver
+      
