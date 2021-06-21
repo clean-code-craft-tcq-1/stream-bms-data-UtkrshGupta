@@ -43,4 +43,4 @@ jobs:
           retention-days: 25
           
       - name: production code run
-          run: python bmsStreaming.py | ./Receiver
+          run: python bmsStreaming.py  | ./Receiver
