@@ -18,8 +18,6 @@ bool CBMSReceiver::ParseDataFromConsole(string& data, BmsParamters& params)
     	params.temperature = pt.get<float>("temperature");
     	params.stateOfCharge = pt.get<float>("soc");
     	params.chargeRate = pt.get<float>("chargingrate");
-	cout << params.temperature << " " << params.stateOfCharge << " " << params.chargeRate << endl;
-
     }
     catch(std::exception const& e)
     {
