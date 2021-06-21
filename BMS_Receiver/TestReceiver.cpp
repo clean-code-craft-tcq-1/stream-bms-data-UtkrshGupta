@@ -9,7 +9,7 @@ string dummy_data[6] = {"{\"temperature\" : 92.11,\"soc\" : 62.55,\"chargingrate
 						"{\"Temperature\" : 46.25,\"SOC\" : 21.13,\"chargingrate\" : 0.8}", 
 						"{\"Temperature\" : 52.10,\"SOC\" : 34.08,\"chargingrate\" : 1.0}", 
 						"{\"Temperature\" : -24.01,\"SOC\" : 84.86,\"chargingrate\" : 0.08}"
-                        };
+                       };
 
 bool compare_float(float x, float y, float epsilon = 0.01f) {
 	if (fabs(x - y) < epsilon)
@@ -19,10 +19,10 @@ bool compare_float(float x, float y, float epsilon = 0.01f) {
 
 TEST_CASE("validate sender data")
 {
-	CBMSReceiver receiver;
+    CBMSReceiver receiver;
     BmsParamters params;
 	
-	for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 6; i++)
 	{
 		REQUIRE(receiver.ParseDataFromConsole(dummy_data[i], params));
 		auto& list = receiver.GetBmsDataContainer();
