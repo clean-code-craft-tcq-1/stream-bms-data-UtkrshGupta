@@ -49,6 +49,18 @@ private:
     float                m_temperature[SMA_MAX_LEN];
     float                m_stateOfCharge[SMA_MAX_LEN];
     float                m_chargeRate[SMA_MAX_LEN];
+public:
+    
+    CBMSReceiver()
+    {
+        memset(m_temperature, 0.0, sizeof(m_temperature));
+        memset(m_stateOfCharge, 0.0, sizeof(m_stateOfCharge));
+        memset(m_chargeRate, 0.0, sizeof(m_chargeRate));
+    }
+
+    vector<BmsParamters>& GetBmsDataContainer();
+
+    BmsParamStats& GetParameterStats();
 
     bool ParseDataFromConsole(string& , BmsParamters& );
     
@@ -59,15 +71,6 @@ private:
     void CalculateBmsParamStatistics();
 
     void PrintDataToConsole();
-
-public:
-    
-    CBMSReceiver()
-    {
-        memset(m_temperature, 0.0, sizeof(m_temperature));
-        memset(m_stateOfCharge, 0.0, sizeof(m_stateOfCharge));
-        memset(m_chargeRate, 0.0, sizeof(m_chargeRate));
-    }
 
     void GetDataFromConsole();
 };

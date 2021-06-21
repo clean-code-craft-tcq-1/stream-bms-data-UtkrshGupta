@@ -5,7 +5,16 @@
 #include "BMS_Receiver.h"
 #include <algorithm>
 
-bool CBMSReceiver::ParseDataFromConsole(string& data, BmsParamters& params)
+vector<BmsParamters>& CBMSReceiver::GetBmsDataContainer()
+{
+    return m_bmsDataContainer;
+}
+BmsParamStats& CBMSReceiver::GetParameterStats()
+{
+    return m_paramstat;
+}
+
+bool CBMSReceiver::ParseDataFromConsole(string data, BmsParamters& params)
 {
     std::stringstream ss;
     ss.str(data);
