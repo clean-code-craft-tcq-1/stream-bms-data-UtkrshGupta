@@ -33,7 +33,7 @@ jobs:
           coverage html
           
       - name: build for Receiver
-        run: g++ -Wall -Wextra -o Receiver ./BMS_Reciever/BMS_Receiver.cpp ./BMS_Reciever/BMS_App.cpp    
+        run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o Receiver ./BMS_Reciever/BMS_Receiver.cpp ./BMS_Reciever/BMS_App.cpp    
         
       - name: Upload coverage
         uses: actions/upload-artifact@v2
