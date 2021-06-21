@@ -1,0 +1,33 @@
+name: Build receiver
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: install coverage tool
+      run: sudo apt-get install -y gcovr
+      
+    - name: Install Boost library
+      run: sudo apt-get install libboost-thread-dev
+
+    - name: build
+      run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o receiverexecutable ./BMS_Receiver/BMS_Receiver.cpp ./BMS_Receiver/BMS_App.cpp
+      
+    - name: build-TEST
+      run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o testexecutable ./BMS_Receiver/BMS_Receiver.cpp ./BMS_Receiver/TestReceiver.cpp
+
+    - name: collect coverage
+      run: gcovr --gcov-exclude=".*test.*" -r . --html --html-details -o coverage.html
+
+    - name: create coverage artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage
+        path: ./*.html
+        retention-days: 1

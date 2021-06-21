@@ -72,3 +72,19 @@ This section lists the minimum functionality of the Sender and Receiver.
 ## Quality Parameters
 
 Setup the quality parameters of your project (duplication, complexity, coverage, warnings) using the GitHub workflow yml files.
+
+## Receiver end Instructions
+    - Run the bmsStreaming.py and enter the number of samples needed 
+    - Limit complexity and Duplicate checks are kept standard from previous assignments 
+    - Below is the output expected after running bmsStreaming.py
+        Enter Total Number of Data Sample Required:10
+        {"temperature": -50.07, "soc": 7.95, "charging rate": 0.97}
+        {"temperature": 85.31, "soc": 90.52, "charging rate": 0.56}
+        {"temperature": 47.04, "soc": 20.79, "charging rate": 0.26}
+        {"temperature": -47.24, "soc": 62.88, "charging rate": 0.48}
+        {"temperature": 81.42, "soc": 43.27, "charging rate": 0.65}
+        {"temperature": 37.26, "soc": 59.15, "charging rate": 0.15}
+        {"temperature": 79.85, "soc": 18.34, "charging rate": 0.67}
+        {"temperature": 30.97, "soc": 54.14, "charging rate": 0.03}
+        {"temperature": 30.5, "soc": 87.17, "charging rate": 0.01}
+        {"temperature": 61.43, "soc": 39.19, "charging rate": 0.53}   
