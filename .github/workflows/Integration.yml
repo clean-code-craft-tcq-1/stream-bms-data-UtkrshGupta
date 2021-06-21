@@ -31,8 +31,14 @@ jobs:
     - name: Install Boost library
       run: sudo apt-get install libboost-thread-dev
       
+    - name: build-TEST
+      run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o testexecutable ./BMS_Receiver/BMS_Receiver.cpp ./BMS_Receiver/TestReceiver.cpp
+      
     - name: build receiver
       run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o receiver ./BMS_Receiver/BMS_App.cpp ./BMS_Receiver/BMS_Receiver.cpp
+    
+    - name: Run Receiver Test
+      run: ./testexecutable
       
     - name: Run executables
       run: python bmsStreaming.py | ./receiver
