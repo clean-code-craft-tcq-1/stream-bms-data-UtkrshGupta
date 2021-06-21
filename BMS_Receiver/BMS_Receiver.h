@@ -35,20 +35,15 @@ typedef struct
     float           avgChargeRate;
 }BmsParamStats;
 
-typedef struct
-{
-    
-}BmsSmaArrays;
-
 class CBMSReceiver
 {
 private:
     vector<BmsParamters> m_bmsDataContainer;
     BmsParamStats        m_paramstat;
-    int                  pos;
     float                m_temperature[SMA_MAX_LEN];
     float                m_stateOfCharge[SMA_MAX_LEN];
     float                m_chargeRate[SMA_MAX_LEN];
+    
 public:
     
     CBMSReceiver()
