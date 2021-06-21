@@ -46,7 +46,7 @@ private:
     vector<BmsParamters> m_bmsDataContainer;
     BmsParamStats        m_paramstat;
     int                  pos;
-    float                m_temprature[SMA_MAX_LEN];
+    float                m_temperature[SMA_MAX_LEN];
     float                m_stateOfCharge[SMA_MAX_LEN];
     float                m_chargeRate[SMA_MAX_LEN];
 
@@ -64,10 +64,9 @@ public:
     
     CBMSReceiver()
     {
-        pos = 0;
-        memset(m_temprature, 0.0, SMA_MAX_LEN);
-        memset(m_stateOfCharge, 0.0, SMA_MAX_LEN);
-        memset(m_chargeRate, 0.0, SMA_MAX_LEN);
+        memset(m_temperature, 0.0, sizeof(m_temperature));
+        memset(m_stateOfCharge, 0.0, sizeof(m_stateOfCharge));
+        memset(m_chargeRate, 0.0, sizeof(m_chargeRate));
     }
 
     void GetDataFromConsole();

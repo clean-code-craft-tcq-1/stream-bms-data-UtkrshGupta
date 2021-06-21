@@ -78,10 +78,10 @@ void CBMSReceiver::PerformSimpleMovingAverage()
 
     tTemp = tSoc = tCr = 0;
     // Moving average of temperature, SoC, CR
-    for (int i = 0; i < m_bmsDataContainer.size(); ++i)
+    for (size_t i = 0; i < m_bmsDataContainer.size(); ++i)
     {
         sum = tTemp;
-        m_paramstat.avgTemperature = MovingAvg(m_temprature, &sum, pos, SMA_MAX_LEN, m_bmsDataContainer.at(i).temperature);
+        m_paramstat.avgTemperature = MovingAvg(m_temperature, &sum, pos, SMA_MAX_LEN, m_bmsDataContainer.at(i).temperature);
         tTemp = sum;
 
         sum = tSoc;
