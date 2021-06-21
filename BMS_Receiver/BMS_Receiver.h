@@ -62,7 +62,7 @@ public:
 
     BmsParamStats& GetParameterStats();
 
-    bool ParseDataFromConsole(string& , BmsParamters& );
+    bool ParseDataFromConsole(string , BmsParamters& );
     
     void PerformMinMaxCalculation();
 
