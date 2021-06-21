@@ -1,0 +1,38 @@
+# This workflow will install all dependencies and , run the integrated executable of both sender and receiver
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Integrated environment
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings.
+        flake8 . --count --exit-zero --max-line-length=80 --ignore=E111,E121,E126 --statistics
+        
+    - name: Install Boost library
+      run: sudo apt-get install libboost-thread-dev
+      
+    - name: build receiver
+      run: g++ -Wall -Wextra -fprofile-arcs -ftest-coverage -o receiver ./BMS_Receiver/BMS_App.cpp ./BMS_Receiver/BMS_Receiver.cpp
+      
+    - name: Run executables
+      run: python bmsStreaming.py | ./receiver
