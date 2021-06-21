@@ -22,7 +22,7 @@ bool CBMSReceiver::ParseDataFromConsole(string data, BmsParamters& params)
     try
     {
         boost::property_tree::ptree pt;
-	boost::property_tree::read_json(ss, pt);
+	    boost::property_tree::read_json(ss, pt);
     	params.jsonData = data;
     	params.temperature = pt.get<float>("temperature");
     	params.stateOfCharge = pt.get<float>("soc");
@@ -30,8 +30,8 @@ bool CBMSReceiver::ParseDataFromConsole(string data, BmsParamters& params)
     }
     catch(std::exception const& e)
     {
-	std::cerr << e.what() << std::endl;
-	return false;
+        std::cerr << e.what() << std::endl;
+        return false;
     }
 
     return true;
@@ -136,9 +136,9 @@ void CBMSReceiver::GetDataFromConsole()
         BmsParamters param;
         std::getline(std::cin, data);
         if (ParseDataFromConsole(data, param))
-	{
+	    {
             m_bmsDataContainer.push_back(param);
-	}	
+	    }	
     }
     CalculateBmsParamStatistics();
     PrintDataToConsole();
