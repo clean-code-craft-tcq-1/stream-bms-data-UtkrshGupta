@@ -60,54 +60,6 @@ private:
 
     void PrintDataToConsole();
 
-    inline void SetMinTemperature(float temperature)
-    {
-        if (temperature < m_paramstat.minTemperature)
-        {
-            m_paramstat.minTemperature = temperature;
-        }
-    }
-
-    inline void SetMaxtemperature(float temperature)
-    {
-        if (temperature > m_paramstat.maxTemperature)
-        {
-            m_paramstat.maxTemperature = temperature;
-        }
-    }
-
-    inline void SetMinStateOfCharge(float soc)
-    {
-        if (soc < m_paramstat.minChargeRate)
-        {
-            m_paramstat.minChargeRate = soc;
-        }
-    }
-
-    inline void SetMaxStateOfCharge(float soc)
-    {
-        if (soc > m_paramstat.maxChargeRate)
-        {
-            m_paramstat.maxChargeRate = soc;
-        }
-    }
-
-    inline void SetMinChargeRate(float cr)
-    {
-        if (cr < m_paramstat.minChargeRate)
-        {
-            m_paramstat.minChargeRate = cr;
-        }
-    }
-
-    inline void SetMaxChargeRate(float cr)
-    {
-        if (cr > m_paramstat.maxChargeRate)
-        {
-            m_paramstat.maxChargeRate = cr;
-        }
-    }
-
 public:
     
     CBMSReceiver()
