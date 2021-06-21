@@ -50,7 +50,7 @@ private:
     float                m_stateOfCharge[SMA_MAX_LEN];
     float                m_chargeRate[SMA_MAX_LEN];
 
-    void ParseDataFromConsole(string& , BmsParamters& );
+    bool ParseDataFromConsole(string& , BmsParamters& );
     
     void PerformMinMaxCalculation();
 

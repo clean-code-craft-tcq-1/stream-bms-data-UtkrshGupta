@@ -1,22 +1,33 @@
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
+#include <boost/foreach.hpp>
+
 #include "BMS_Receiver.h"
 #include <algorithm>
 
-void CBMSReceiver::ParseDataFromConsole(string& data, BmsParamters& params)
+bool CBMSReceiver::ParseDataFromConsole(string& data, BmsParamters& params)
 {
-    string dataCopy = data;
-    dataCopy.resize(dataCopy.size() - 1);
-    stringstream str(dataCopy);
-    string subString[7];
+    std::stringstream ss;
+    ss.str(data);
 
-    for (int i = 0; i < 7; ++i)
+    try
     {
-        str >> subString[i];
+        boost::property_tree::ptree pt;
+	boost::property_tree::read_json(ss, pt);
+    	params.jsonData = data;
+    	params.temperature = pt.get<float>("temperature");
+    	params.stateOfCharge = pt.get<float>("soc");
+    	params.chargeRate = pt.get<float>("chargingrate");
+	cout << params.temperature << " " << params.stateOfCharge << " " << params.chargeRate << endl;
+
+    }
+    catch(std::exception const& e)
+    {
+	std::cerr << e.what() << std::endl;
+	return false;
     }
 
-    params.jsonData = data;
-    params.temperature = std::stof(subString[TEMP_JSON_INDEX]);
-    params.stateOfCharge = std::stof(subString[SOC_JSON_INDEX]);
-    params.chargeRate = std::stof(subString[CR_JSON_INDEX]);
+    return true;
 }
 
 void CBMSReceiver::PerformMinMaxCalculation()
@@ -62,12 +73,11 @@ static float MovingAvg(float* ptrArrNum, float* ptrSum, int pos, int len, float 
 
 void CBMSReceiver::PerformSimpleMovingAverage()
 {
-    float sum = 0;
     int pos = 0;
-    float tTemp, tSoc, tCr;
+    float sum, tTemp, tSoc, tCr;
 
-    tTemp = tSoc = tCr = sum;
-    // Moving average of temperature, Soc, Cr
+    tTemp = tSoc = tCr = 0;
+    // Moving average of temperature, SoC, CR
     for (int i = 0; i < m_bmsDataContainer.size(); ++i)
     {
         sum = tTemp;
@@ -79,11 +89,11 @@ void CBMSReceiver::PerformSimpleMovingAverage()
         tSoc = sum;
 
         sum = tCr;
-        m_paramstat.avgChargeRate = MovingAvg(m_chargeRate, &sum, pos, SMA_MAX_LEN, m_bmsDataContainer.at(i).stateOfCharge);
+        m_paramstat.avgChargeRate = MovingAvg(m_chargeRate, &sum, pos, SMA_MAX_LEN, m_bmsDataContainer.at(i).chargeRate);
         tCr = sum;
 
         pos++;
-        if (pos > SMA_MAX_LEN)
+        if (pos >= SMA_MAX_LEN)
         {
             pos = 0;    
         }
@@ -99,11 +109,6 @@ void CBMSReceiver::CalculateBmsParamStatistics()
 void CBMSReceiver::PrintDataToConsole()
 {
     cout << "________________BMS Statistrics________________" << endl;
-    cout << "JSON data" << endl;
-    for (int i = 0; i < m_bmsDataContainer.size(); ++i)
-    {
-        cout << m_bmsDataContainer.at(i).jsonData << endl;
-    }
 
     cout << "Minimum temperature        : " << m_paramstat.minTemperature << endl;
     cout << "Maximum temperature        : " << m_paramstat.maxTemperature << endl;
@@ -119,14 +124,16 @@ void CBMSReceiver::PrintDataToConsole()
 void CBMSReceiver::GetDataFromConsole()
 {
     std::string data;
-    bool init = true;
-    for (int i = 0; i < 20; ++i)
+    for (int i = 0; i < 100; ++i)
     {
         BmsParamters param;
         std::getline(std::cin, data);
-        ParseDataFromConsole(data, param); 
-        m_bmsDataContainer.push_back(param);
+        if (ParseDataFromConsole(data, param))
+	{
+            m_bmsDataContainer.push_back(param);
+	}	
     }
     CalculateBmsParamStatistics();
     PrintDataToConsole();
 }
+
